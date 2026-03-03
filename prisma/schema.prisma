@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  name        String
+  startDate   DateTime?
+  endDate     DateTime?
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  meetings    Meeting[]
+  associates  Associate[]
+  clientFiles ClientFile[]
+}
+
+model Meeting {
+  id        String   @id @default(cuid())
+  title     String
+  scheduledAt DateTime
+  notes     String?
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Associate {
+  id        String    @id @default(cuid())
+  name      String
+  role      String?
+  projectId String
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tasks     Task[]
+  feedback  Feedback[]
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  status      String    @default("todo")
+  associateId String
+  associate   Associate @relation(fields: [associateId], references: [id], onDelete: Cascade)
+}
+
+model Feedback {
+  id          String    @id @default(cuid())
+  content     String
+  createdAt   DateTime  @default(now())
+  associateId String
+  associate   Associate @relation(fields: [associateId], references: [id], onDelete: Cascade)
+}
+
+model ClientFile {
+  id         String   @id @default(cuid())
+  clientName String
+  role       String?
+  priorities String?
+  notes      String?
+  projectId  String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}

@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Light theme (default) */
+:root {
+  --surface: 250 250 250;
+  --surface-elevated: 255 255 255;
+  --surface-muted: 245 245 247;
+  --border: 214 214 219;
+  --border-subtle: 229 229 234;
+  --accent: 0 122 255;
+  --text: 29 29 31;
+  --text-secondary: 110 110 115;
+  --text-tertiary: 142 142 147;
+  --inverse: 255 255 255;
+}
+
+/* Dark theme – applied when data-theme="dark" on html */
+html[data-theme="dark"] {
+  --surface: 22 22 24;
+  --surface-elevated: 38 38 42;
+  --surface-muted: 50 50 54;
+  --border: 62 62 66;
+  --border-subtle: 50 50 54;
+  --accent: 10 132 255;
+  --text: 242 242 247;
+  --text-secondary: 174 174 178;
+  --text-tertiary: 142 142 147;
+  --inverse: 29 29 31;
+}
+
+/* Primary button: always contrasts with theme */
+.btn-primary {
+  background: rgb(var(--text));
+  color: rgb(var(--inverse));
+}
+
+body {
+  @apply antialiased;
+  color: rgb(var(--text));
+  background: rgb(var(--surface));
+}
+
+/* Smooth theme transition – theme-dependent colors animate when switching light/dark */
+@media (prefers-reduced-motion: no-preference) {
+  body.theme-transition,
+  body.theme-transition * {
+    transition:
+      background-color 0.28s ease,
+      color 0.28s ease,
+      border-color 0.28s ease,
+      box-shadow 0.28s ease,
+      fill 0.28s ease;
+  }
+  /* Keep focus ring and pseudo-elements instant */
+  body.theme-transition *:focus-visible,
+  body.theme-transition *::before,
+  body.theme-transition *::after {
+    transition: none;
+  }
+}
+
+@layer base {
+  h1 {
+    @apply text-2xl font-semibold tracking-tight;
+    color: rgb(var(--text));
+  }
+  h2 {
+    @apply text-lg font-medium tracking-tight;
+    color: rgb(var(--text));
+  }
+  h3 {
+    @apply text-base font-medium;
+    color: rgb(var(--text));
+  }
+}
+
+*:focus-visible {
+  @apply outline-none ring-2 ring-offset-2;
+  --tw-ring-color: rgb(var(--accent));
+  --tw-ring-offset-color: rgb(var(--surface));
+}
+
+::selection {
+  background: rgb(var(--accent) / 0.25);
+}
