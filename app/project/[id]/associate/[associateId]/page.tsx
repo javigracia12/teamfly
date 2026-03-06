@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { AssociateDetail } from "@/components/AssociateDetail";
 
 export default async function AssociatePage({
@@ -9,6 +9,7 @@ export default async function AssociatePage({
   params: Promise<{ id: string; associateId: string }>;
 }) {
   const { id: projectId, associateId } = await params;
+  const prisma = await getPrisma();
 
   const [project, associate] = await Promise.all([
     prisma.project.findUnique({

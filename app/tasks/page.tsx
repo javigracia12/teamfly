@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { Sidebar } from "@/components/Sidebar";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { TasksDashboard } from "@/components/TasksDashboard";
 
 export default async function TasksPage({
@@ -9,6 +9,7 @@ export default async function TasksPage({
 }: {
   searchParams: Promise<{ status?: string; hideDone?: string; view?: string }>;
 }) {
+  const prisma = await getPrisma();
   const resolvedParams = await searchParams;
   const cookieStore = await cookies();
   const currentId = cookieStore.get("currentProjectId")?.value;

@@ -1,0 +1,10 @@
+# Cloudflare Pages (next-on-pages). D1 binding name must be "DB".
+# For production: add the same D1 database in Pages dashboard → Settings → Functions → D1 bindings.
+name = "teamfly"
+compatibility_date = "2024-12-30"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "teamfly-db"
+database_id = "YOUR_D1_DATABASE_ID"

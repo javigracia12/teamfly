@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { ClientFileDetail } from "@/components/ClientFileDetail";
 
 export default async function ClientFilePage({
@@ -9,6 +9,7 @@ export default async function ClientFilePage({
   params: Promise<{ id: string; clientId: string }>;
 }) {
   const { id: projectId, clientId } = await params;
+  const prisma = await getPrisma();
 
   const [project, client] = await Promise.all([
     prisma.project.findUnique({

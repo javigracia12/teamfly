@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 export default async function HomePage() {
   try {
+    const prisma = await getPrisma();
     const cookieStore = await cookies();
     const currentId = cookieStore.get("currentProjectId")?.value;
 

@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { ProjectTabs } from "@/components/ProjectTabs";
 import { ProjectHeader } from "@/components/ProjectHeader";
 
@@ -10,6 +10,7 @@ export default async function ProjectPage({
   searchParams: Promise<{ tab?: string; status?: string; hideDone?: string; view?: string }>;
 }) {
   const { id } = await params;
+  const prisma = await getPrisma();
   const searchParamsRes = await searchParams;
   const tab = searchParamsRes.tab ?? "dashboard";
   const taskStatus = searchParamsRes.status ?? "all";

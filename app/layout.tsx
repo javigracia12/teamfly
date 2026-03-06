@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
+export const runtime = "edge";
+
 export const metadata: Metadata = {
   title: "Teamfly",
   description: "Project ERP for project leaders",

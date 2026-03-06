@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Sidebar } from "@/components/Sidebar";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 export default async function ProjectLayout({
   children,
@@ -10,6 +10,7 @@ export default async function ProjectLayout({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const prisma = await getPrisma();
   const project = await prisma.project.findUnique({
     where: { id },
     select: { name: true },

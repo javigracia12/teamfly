@@ -1,9 +1,10 @@
 import { Sidebar } from "@/components/Sidebar";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import { setCurrentProject } from "@/lib/actions";
 import { CreateProjectForm } from "@/components/CreateProjectForm";
 
 export default async function ProjectsPage() {
+  const prisma = await getPrisma();
   const projects = await prisma.project.findMany({
     orderBy: { updatedAt: "desc" },
     include: {
